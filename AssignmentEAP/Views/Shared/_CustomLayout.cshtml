@@ -102,7 +102,7 @@
                     <div id="discipline" class="collapse">
                         <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
                             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">List</a></li>
-                            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Add</a></li>
+                            <li class="sidebar-list-item"><a href="" data-toggle="modal" data-target="#Modal-Add-Discipline" class="sidebar-link text-muted pl-lg-5">Add</a></li>
                             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Set Value</a></li>
                         </ul>
                     </div>
@@ -115,6 +115,43 @@
 
                 @RenderBody()
 
+                <!--Modal Thêm thông tin đi muộn-->!>
+                <div id="Modal-Add-Discipline" tabindex="-1" role="dialog" aria-labelledby="Modal-Add-Discipline" aria-hidden="true" class="modal fade text-left">
+                    <div role="document" class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 id="exampleModalLabel" class="modal-title">Add Student Discipline</h4>
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                                <form>
+                                    <div class="form-group">
+                                        <label>Search Student</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" placeholder="Input Student Name or Email, . . ." aria-label="Recipient's username" aria-describedby="button-addon2" class="form-control">
+                                            <div class="input-group-append">
+                                                <button id="button-addon2" type="button" class="btn btn-primary">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" placeholder="Password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Signin" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal-->!>
             </div>
             <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
                 <div class="container-fluid">
