@@ -27,6 +27,7 @@ namespace AssignmentEAP.Models
         [DisplayName("Class")]
         public int Class_Id { get; set; }
         public virtual Class Class { get; set; }
+        public virtual ICollection<DisciplineStudent> DisciplineStudents { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public DateTime Deleted_at { get; set; }
