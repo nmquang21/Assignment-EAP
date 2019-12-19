@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AssignmentEAP.Models.Class>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Updated_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deleted_at)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Class_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created_at)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Updated_at)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Deleted_at)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Class_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Class_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Class_Id })
+        </td>
+    </tr>
+}
+
+</table>
