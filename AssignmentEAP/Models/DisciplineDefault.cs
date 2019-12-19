@@ -15,7 +15,7 @@ namespace AssignmentEAP.Models
         public int Squat_Amout { get; set; }
         public int Push_Up { get; set; }
         public DateTime Created_at { get; set; }
-        public DateTime Updated_at { get; set; }
-        public DateTime Deleted_at { get; set; }
+        public DateTime? Updated_at { get; set; }
+        public DateTime? Deleted_at { get; set; }
     }
 }
