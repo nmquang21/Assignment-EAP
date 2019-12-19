@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
     <link rel="shortcut icon" href="/Content/img/favicon.png?3">
     <link href="~/Content/css/custom-select-option.css" rel="stylesheet" />
+    <link href="~/Content/css/dialog-custom.css" rel="stylesheet" />
     @Styles.Render("~/bundles/css")
 
 
@@ -131,7 +132,12 @@
                                     <div class="form-group">
                                         <label>Search Student</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" placeholder="Input Student Name or Email, . . ." aria-label="Recipient's username" aria-describedby="button-addon2" class="form-control">
+                                            <input type="text" placeholder="Input Student Name or Email, . . ." aria-label="Recipient's username" aria-describedby="button-addon2" class="form-control"  data-toggle="dropdown">
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width:79%; min-height:200px; overflow-y:scroll">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
                                             <div class="input-group-append">
                                                 <button id="button-addon2" type="button" class="btn btn-primary">Search</button>
                                             </div>
@@ -158,11 +164,13 @@
                                                 <ul class="cont_select_int">  </ul>
                                             </div>
                                         </div>
+                                        
                                         <!-- Custom select structure -->
                                     </div>
-                                    @*<div class="form-group">
-                                        <input type="submit" value="Signin" class="btn btn-primary">
-                                    </div>*@
+                                    <div class="form-group">
+                                        <input type="button" value="Check" class="btn btn-primary">
+                                    </div>
+                                    <div class="check-discipline text-danger"></div>
                                 </form>
                             </div>
                             <div class="modal-footer">
