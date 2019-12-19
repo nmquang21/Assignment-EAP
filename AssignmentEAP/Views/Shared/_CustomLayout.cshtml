@@ -13,6 +13,8 @@
     <link rel="shortcut icon" href="/Content/img/favicon.png?3">
     <link href="~/Content/css/custom-select-option.css" rel="stylesheet" />
     <link href="~/Content/css/dialog-custom.css" rel="stylesheet" />
+
+    <link href="~/Content/css/data-table.css" rel="stylesheet" />
     @Styles.Render("~/bundles/css")
 
 
@@ -81,7 +83,7 @@
         <div id="sidebar" class="sidebar py-3">
             <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN</div>
             <ul class="sidebar-menu list-unstyled">
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>Home</span></a></li>
+                <li class="sidebar-list-item"><a href="/Home" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>Home</span></a></li>
                 <li class="sidebar-list-item">
                     <a href="#" data-toggle="collapse" data-target="#class" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-gray"></i><span>Class</span></a>
                     <div id="class" class="collapse">
@@ -104,7 +106,7 @@
                     <a href="#" data-toggle="collapse" data-target="#discipline" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-gray"></i><span>Discipline</span></a>
                     <div id="discipline" class="collapse">
                         <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">List</a></li>
+                            <li class="sidebar-list-item"><a href="/DisciplineStudents" class="sidebar-link text-muted pl-lg-5">List</a></li>
                             <li class="sidebar-list-item"><a href="" data-toggle="modal" data-target="#Modal-Add-Discipline" class="sidebar-link text-muted pl-lg-5">Add</a></li>
                             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Set Value</a></li>
                         </ul>
@@ -118,7 +120,7 @@
 
                 @RenderBody()
 
-                <!--Modal Thêm thông tin đi muộn-->!>
+                <!--Modal Thêm thông tin đi muộn-->
                 <div id="Modal-Add-Discipline" tabindex="-1" role="dialog" aria-labelledby="Modal-Add-Discipline" aria-hidden="true" class="modal fade text-left">
                     <div role="document" class="modal-dialog">
                         <div class="modal-content">
@@ -180,7 +182,7 @@
                         </div>
                     </div>
                 </div>
-                <!--Modal-->!>
+                <!--Modal-->
             </div>
             <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
                 <div class="container-fluid">
