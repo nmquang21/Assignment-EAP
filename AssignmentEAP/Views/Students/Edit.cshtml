@@ -1,0 +1,81 @@
+﻿
+@using System.Web.UI.WebControls
+@model AssignmentEAP.Models.Student
+@{
+    ViewBag.Title = "Edit";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid px-xl-5">
+        <section class="py-5">
+            <div class="row">
+                <!-- Basic Form-->
+                <div class="col-lg-2 mb-5"></div>
+                <!-- Inline Form-->
+                <div class="col-lg-8 mb-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h6 text-uppercase mb-0">Create Student</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-inline">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.RollNumber)
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Student_Name, htmlAttributes: new { @class = "sr-only" })
+                                    @Html.EditorFor(model => model.Student_Name, new { htmlAttributes = new { @class = "mr-3 form-control", @id = "inlineFormInput", @PlaceHolder = "Student Name" } })
+                                    @Html.ValidationMessageFor(model => model.Student_Name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Avatar, htmlAttributes: new { @class = "sr-only" })
+                                    @Html.EditorFor(model => model.Avatar, new { htmlAttributes = new { @class = "mr-3 form-control", @id = "inlineFormInput", @PlaceHolder = "Avatar" } })
+                                    @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "sr-only" })
+                                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "mr-3 form-control", @id = "inlineFormInput", @PlaceHolder = "BrithDay" } })
+                                    @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "sr-only" })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "mr-3 form-control", @id = "inlineFormInput", @PlaceHolder = "Email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "sr-only" })
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "mr-3 form-control", @id = "inlineFormInput", @PlaceHolder = "Phone" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Class_Id, htmlAttributes: new { @class = "sr-only" })
+                                    @Html.EditorFor(model => model.Class_Id, new { htmlAttributes = new { @class = "mr-3 form-control", @id = "inlineFormInput", @PlaceHolder = "Class" } })
+                                    @Html.ValidationMessageFor(model => model.Class_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form-group" style="text-align: center">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Form-->
+                <div class="col-lg-2 mb-5"></div>
+            </div>
+        </section>
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
