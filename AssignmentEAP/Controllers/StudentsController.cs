@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssignmentEAP.Models;
+using LinqKit;
+using PagedList;
 
 namespace AssignmentEAP.Controllers
 {
@@ -15,12 +18,65 @@ namespace AssignmentEAP.Controllers
         private MyDbContext db = new MyDbContext();
 
         // GET: Students
-        public ActionResult Index()
+        public ActionResult Index(string search, int? page, string sortOrder, string className)
         {
-            var students = db.Students.Include(s => s.Class);
-            return View(students.ToList());
-        }
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.IDSort = sortOrder == "id"? "id_desc":"id"; 
+            ViewBag.ClassSort = sortOrder == "class"? "class_desc":"class"; 
+            var predicate = PredicateBuilder.New<Student>(true);
+            if (search != null)
+            {
+                page = 1;
+            }
+            ViewBag.Search = search;
+            ViewBag.SortOrder = sortOrder;
+            var listStudent = from s in db.Students select s;
 
+            if (!String.IsNullOrEmpty(search))
+            {
+                predicate = predicate.Or(s => s.Student_Name.Contains(search));
+                predicate = predicate.Or(s => s.Email.Contains(search));
+                predicate = predicate.Or(s => s.RollNumber.Contains(search));
+                predicate = predicate.Or(s => s.Phone.Contains(search));
+            }
+            if (!String.IsNullOrEmpty(className) && className != "All")
+            {
+                predicate = predicate.And(s => s.Class.Class_name == className);
+            }
+            ViewBag.Class = className;
+            ViewBag.listClass = db.Classes.ToList();
+            listStudent = listStudent.Where(predicate);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    listStudent = listStudent.OrderByDescending(s => s.Student_Name);
+                    break;
+                case "id":
+                    listStudent = listStudent.OrderBy(s => s.RollNumber);
+                    break;
+                case "id_desc":
+                    listStudent = listStudent.OrderByDescending(s => s.RollNumber);
+                    break;
+                case "class":
+                    listStudent = listStudent.OrderBy(s => s.Class.Class_name);
+                    break;
+                case "class_desc":
+                    listStudent = listStudent.OrderByDescending(s => s.Class.Class_name);
+                    break;
+                default:
+                    listStudent = listStudent.OrderBy(s => s.Student_Name);
+                    break;
+            }
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(listStudent.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult GetStudentAjax()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            List<Student> listStudent = db.Students.ToList();
+            return Json(new { data = listStudent }, JsonRequestBehavior.AllowGet);
+        }
         // GET: Students/Details/5
         public ActionResult Details(string id)
         {

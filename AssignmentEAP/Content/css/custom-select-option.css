@@ -81,3 +81,6 @@
   margin: 0px;
   cursor: pointer;
 }
+.select2-container--default .select2-selection--single{
+    height: 33px;
+}

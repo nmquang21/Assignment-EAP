@@ -1,1 +1,6 @@
-/* your styles go here */
+.select2-selection--single {
+    height: 33px;
+}
+.sort-link {
+    margin-right: 5px;
+}
