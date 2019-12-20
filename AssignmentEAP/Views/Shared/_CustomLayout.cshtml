@@ -122,7 +122,7 @@
                 @RenderBody()
 
                 <!--Modal Thêm thông tin đi muộn-->
-                <div id="Modal-Add-Discipline" tabindex="-1" role="dialog" aria-labelledby="Modal-Add-Discipline" aria-hidden="true" class="modal fade text-left">
+                <div id="Modal-Add-Discipline" role="dialog" class="modal fade text-left">
                     <div role="document" class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -135,29 +135,22 @@
                                     <div class="form-group">
                                         <label>Search Student</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" placeholder="Input Student Name or Email, . . ." aria-label="Recipient's username" aria-describedby="button-addon2" class="form-control" data-toggle="dropdown">
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width:79%; min-height:200px; overflow-y:scroll">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item " href="#">Something else here</a>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <button id="button-addon2" type="button" class="btn btn-primary">Search</button>
-                                            </div>
+                                            <select class="form-control select-name" style="width:100%">
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Select Discipline</label>
-                                        <!-- Custom select structure -->
-
-                                        <select class="form-control select2" style="width:50%">
-                                          
-                                        </select>
+                                        <div class="input-group mb-3">
+                                            <select class="form-control select-discipline" style="width:40%">
+                                            </select>
+                                        </div>
                                         
-                                        <!-- Custom select structure -->
+
+
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" value="Check" class="btn btn-primary btn-check-discipline">
+                                        <input type="button" value="Check" class="btn btn-primary btn-check-discipline">
                                     </div>
                                     <div class="check-discipline text-danger"></div>
                                 </form>
@@ -200,21 +193,37 @@
     @RenderSection("scripts", required: false)
     <script>
         $(document).ready(function () {
-            $('.select2').select2({
+            $('.select-name').select2({
                 placeholder: 'Select an item',
                 ajax: {
-                  url: '/Discipline',
+                    url: '/Discipline',
                     type: 'GET',
-                  dataType: 'json',
-                  processResults: function (data) {
-                    return {
-                      results: data
-                    };
-                  },
-                  cache: true
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
                 }
-              });
-            
+            });
+            $('.select-discipline').select2({
+                placeholder: 'Select an item',
+                ajax: {
+                    url: '/Discipline',
+                    type: 'GET',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                }
+            });
+            jQuery('.btn-check-discipline').click(function () {
+                console.log(jQuery('.select-name').val())
+            })
         });
     </script>
 </body>

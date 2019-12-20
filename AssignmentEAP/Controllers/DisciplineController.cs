@@ -13,7 +13,7 @@ namespace AssignmentEAP.Controllers
         // GET: Discipline
         public ActionResult Index()
         {
-            var listDisciplines = db.Students.Select(c => new { id = c.RollNumber, text = c.Student_Name}).ToList();
+            var listDisciplines = db.Disciplines.Select(c => new { id = c.Discipline_id, text = c.Discipline_name}).ToList();
             return Json(listDisciplines, JsonRequestBehavior.AllowGet);
         }
     }
