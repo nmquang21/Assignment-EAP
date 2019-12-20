@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssignmentEAP.Models;
+using LinqKit;
 
 namespace AssignmentEAP.Controllers
 {
@@ -19,7 +20,12 @@ namespace AssignmentEAP.Controllers
         {
             return View(db.Classes.ToList());
         }
-
+        public ActionResult GetClassAjax()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            List<Class> classes = db.Classes.ToList();
+            return Json(new { data = classes }, JsonRequestBehavior.AllowGet);
+        }
         // GET: Classes/Details/5
         public ActionResult Details(int? id)
         {

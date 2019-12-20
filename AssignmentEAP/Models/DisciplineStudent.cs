@@ -15,7 +15,7 @@ namespace AssignmentEAP.Models
         public double Discipline_Value { get; set; }
         [DisplayName("Discipline Date")]
         public DateTime Created_at { get; set; }
-        public DateTime Updated_at { get; set; }
+        public DateTime? Updated_at { get; set; }
         public DateTime? Deleted_at { get; set; }
         public virtual Student Student { get; set; }
         public virtual Discipline Discipline { get; set; }
