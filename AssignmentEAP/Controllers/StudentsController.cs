@@ -16,6 +16,28 @@ namespace AssignmentEAP.Controllers
     public class StudentsController : Controller
     {
         private MyDbContext db = new MyDbContext();
+        //Search Student
+        public ActionResult SearchStudent(string term) {
+            var listStudent = from s in db.Students select s;
+            //var listStudent = db.Students.Select(s => new { id = s.RollNumber, text = s.Student_Name + "-" + s.RollNumber });
+            var predicate = PredicateBuilder.New<Student>(true);
+            if (!String.IsNullOrEmpty(term))
+            {
+                predicate = predicate.Or(s => s.Student_Name.Contains(term));
+                predicate = predicate.Or(s => s.Email.Contains(term));
+                predicate = predicate.Or(s => s.RollNumber.Contains(term));
+                predicate = predicate.Or(s => s.Phone.Contains(term));
+            }
+            else
+            {
+            
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            listStudent = listStudent.Where(predicate);
+            var result = new List<Student>(listStudent).Select(s => new { id = s.RollNumber, text = s.Student_Name + "-" + s.RollNumber });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Students
         public ActionResult Index(string search, int? page, string sortOrder, string className)

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssignmentEAP.Models;
+using AssignmentEAP.Service;
 
 namespace AssignmentEAP.Controllers
 {
@@ -45,17 +46,11 @@ namespace AssignmentEAP.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DisciplineStudent_id,Discipline_Value,Created_at,Updated_at,Deleted_at")] DisciplineStudent disciplineStudent)
-        {
-            if (ModelState.IsValid)
-            {
-                db.DisciplineStudents.Add(disciplineStudent);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(disciplineStudent);
+        public ActionResult Create(string studentID, int disciplineID)
+        {
+            DisciplineStudentService disciplineStudentService = new DisciplineStudentService();
+            return disciplineStudentService.CheckDisciplineStudent(studentID, disciplineID);
         }
 
         // GET: DisciplineStudents/Edit/5
