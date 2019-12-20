@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AssignmentEAP.Models;
 using LinqKit;
+using PagedList;
 
 namespace AssignmentEAP.Controllers
 {
@@ -16,9 +17,35 @@ namespace AssignmentEAP.Controllers
         private MyDbContext db = new MyDbContext();
 
         // GET: Classes
-        public ActionResult Index()
+        public ActionResult Index(string search, int? page, string sortOrder)
         {
-            return View(db.Classes.ToList());
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var predicate = PredicateBuilder.New<Class>(true);
+            if (search != null)
+            {
+                page = 1;
+            }
+            ViewBag.Search = search;
+            ViewBag.SortOrder = sortOrder;
+            var listClass = from s in db.Classes select s;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                predicate = predicate.Or(s => s.Class_name.Contains(search));
+            }
+            listClass = listClass.Where(predicate);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    listClass = listClass.OrderByDescending(s => s.Class_name);
+                    break;
+                default:
+                    listClass = listClass.OrderBy(s => s.Class_name);
+                    break;
+            }
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(listClass.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult GetClassAjax()
         {
