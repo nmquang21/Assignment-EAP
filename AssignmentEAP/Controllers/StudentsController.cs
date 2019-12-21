@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssignmentEAP.Models;
 using LinqKit;
+using Microsoft.Ajax.Utilities;
 using PagedList;
 
 namespace AssignmentEAP.Controllers
@@ -99,6 +101,60 @@ namespace AssignmentEAP.Controllers
             List<Student> listStudent = db.Students.ToList();
             return Json(new { data = listStudent }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetChartData(string roll, string start, string end)
+        {
+            var startTime = DateTime.Now;
+            startTime = startTime.AddYears(-1);
+            try
+            {
+                startTime = DateTime.Parse(start);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, 0, 0, 0, 0);
+
+            var endTime = DateTime.Now;
+            try
+            {
+                endTime = DateTime.Parse(end);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            endTime = new DateTime(endTime.Year, endTime.Month, endTime.Day, 23, 59, 59, 0);
+
+            var data = db.DisciplineStudents.Where(s => s.Student.RollNumber == roll && (s.Deleted_at == null) && (s.Created_at >= startTime && s.Created_at <= endTime))
+                .GroupBy(
+                    s => new
+                    {
+                        Year = s.Created_at.Year,
+                        Month = s.Created_at.Month,
+                        //Week = GetWeekNumberOfMonth(s.Created_at)
+                        Day = s.Created_at.Day
+                    }
+                ).Select(g => new
+                {
+                    Date = g.FirstOrDefault().Created_at,
+                    Money = g.Where(s => s.Discipline.Discipline_name == "Money").Sum(s => (double?)s.Discipline_Value) ?? 0,
+                    PushUp = g.Where(s => s.Discipline.Discipline_name != "Money").Sum(s => (double?)s.Discipline_Value)?? 0,
+                    Count = g.Count()
+                }).OrderBy(s => s.Date).ToList();
+
+            return new JsonResult()
+            {
+                Data = data.Select(s => new
+                {
+                    Date = s.Date.ToString("yyyy MMMM"),
+                    Money = s.Money,
+                    PushUp = s.PushUp,
+                    Count = s.Count
+                }),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         // GET: Students/Details/5
         public ActionResult Details(string id)
         {
@@ -111,6 +167,16 @@ namespace AssignmentEAP.Controllers
             {
                 return HttpNotFound();
             }
+            var data = db.DisciplineStudents
+                .Where(d => d.Student.RollNumber == id)
+                .GroupBy(d=>d.Student.RollNumber)
+                .Select(s => new
+                {
+                    TotalMoney= s.Where(d => d.Discipline.Discipline_name == "Money").Sum(d => (double?)d.Discipline_Value)??0,
+                    TotalPushUp = s.Where(d => d.Discipline.Discipline_name != "Money").Sum(d => (double?)d.Discipline_Value) ?? 0,
+                });
+            ViewBag.TotalMoney = data.Sum(d => (double?)d.TotalMoney)??0;
+            ViewBag.TotalPushUp = data.Sum(d => (double?)d.TotalPushUp)??0;
             return View(student);
         }
 
@@ -206,5 +272,17 @@ namespace AssignmentEAP.Controllers
             }
             base.Dispose(disposing);
         }
+        //static int GetWeekNumberOfMonth(DateTime date)
+        //{
+        //    date = date.Date;
+        //    DateTime firstMonthDay = new DateTime(date.Year, date.Month, 1);
+        //    DateTime firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
+        //    if (firstMonthMonday > date)
+        //    {
+        //        firstMonthDay = firstMonthDay.AddMonths(-1);
+        //        firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
+        //    }
+        //    return (date - firstMonthMonday).Days / 7 + 1;
+        //}
     }
 }
