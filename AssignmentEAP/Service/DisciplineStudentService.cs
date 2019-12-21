@@ -42,13 +42,11 @@ namespace AssignmentEAP.Service
                 var today = DateTime.Today;
                 DisciplineStudent yesterday = db.DisciplineStudents.Where(c => c.Student.RollNumber.Equals(rollnumber)).OrderByDescending(c=>c.Created_at).Take(1).FirstOrDefault();
 
-                if ((today-yesterday.Created_at).TotalDays == 1)
+                if (yesterday != null&&(today-yesterday.Created_at).TotalDays == 1)
                 {
                     DisciplineStudent beforeYesterday = db.DisciplineStudents.Where(c => c.Student.RollNumber.Equals(rollnumber)).OrderByDescending(c => c.Created_at).Skip(1).Take(1).FirstOrDefault();
-                    if((today - yesterday.Created_at).TotalDays == 2)
-                    {
-                        
-                        
+                    if(beforeYesterday != null && (today - beforeYesterday.Created_at).TotalDays == 2)
+                    {                                        
                         switch (id)
                         {
                             case 1:
@@ -66,9 +64,7 @@ namespace AssignmentEAP.Service
                         }
                     }
                     else
-                    {
-                        
-                        
+                    {                      
                         switch (id)
                         {
                            
@@ -84,11 +80,11 @@ namespace AssignmentEAP.Service
                             disciplineStudent.Discipline_Value = 2 * disciplineDefault.Push_Up;
                             message = formatMessage(student.Student_Name, "second time", 2, "Push-Up");
                             break;
-                        
+                       
                         }
                     }
                 }
-                else if(today.Date == yesterday.Created_at.Date)
+                else if(yesterday != null && today.Date == yesterday.Created_at.Date)
                 {
                     return new JsonResult()
                     {
