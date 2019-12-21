@@ -17,7 +17,7 @@ namespace AssignmentEAP.Service
             string message = String.Format("Student {0} is late for school for the {1} time, Discipline-x{2} {3}", studentName, n, quantity, discipline );
             return message;
         }
-        public ActionResult CheckDisciplineStudent(string rollnumber, int id) {
+        public ActionResult CheckDisciplineStudent(string rollnumber, int? id) {
             var disciplineStudent = new DisciplineStudent();
             var students = db.Students.Where(s => s.RollNumber.Equals(rollnumber));
             if (students.Count() == 0)

@@ -47,7 +47,7 @@ namespace AssignmentEAP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
 
-        public ActionResult Create(string studentID, int disciplineID)
+        public ActionResult Create(string studentID, int? disciplineID)
         {
             DisciplineStudentService disciplineStudentService = new DisciplineStudentService();
             return disciplineStudentService.CheckDisciplineStudent(studentID, disciplineID);
