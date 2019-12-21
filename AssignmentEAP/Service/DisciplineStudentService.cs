@@ -12,9 +12,9 @@ namespace AssignmentEAP.Service
     {
 
         private MyDbContext db = new MyDbContext();
-        public string formatMessage(string studentName, string n, int quantity, string discipline)
+        public string formatMessage(string studentName, string n, int x, string discipline, double quantity)
         {
-            string message = String.Format("Student {0} is late for school for the {1} time, Discipline-x{2} {3}", studentName, n, quantity, discipline );
+            string message = String.Format("Student {0} is late for school for the {1} time, Discipline: x{2} {3} - {4}", studentName, n, x, discipline,quantity );
             return message;
         }
         public ActionResult CheckDisciplineStudent(string rollnumber, int? id) {
@@ -34,11 +34,14 @@ namespace AssignmentEAP.Service
             else
             {
                 string message = "";
-                var student = students.FirstOrDefault();
-                var disciplineDefault = db.DisciplineDefaults.Find(1);
+                var student = students.FirstOrDefault();         
                 disciplineStudent.Student = db.Students.Find(rollnumber);
                 disciplineStudent.Discipline = db.Disciplines.Find(id);
                 var _DBdisciplineStudents = db.DisciplineStudents;
+                var disciplineDefault = db.DisciplineDefaults.Find(1);
+                var _moneyDefault = disciplineDefault.Money;
+                var _pushUpDefault = disciplineDefault.Push_Up;
+                var _squatDefault = disciplineDefault.Squat_Amout;
                 var today = DateTime.Today;
                 DisciplineStudent yesterday = db.DisciplineStudents.Where(c => c.Student.RollNumber.Equals(rollnumber)).OrderByDescending(c=>c.Created_at).Take(1).FirstOrDefault();
 
@@ -50,16 +53,16 @@ namespace AssignmentEAP.Service
                         switch (id)
                         {
                             case 1:
-                                disciplineStudent.Discipline_Value = 3 * disciplineDefault.Squat_Amout;
-                                message = formatMessage(student.Student_Name, "third time", 3, "Squat");
+                                disciplineStudent.Discipline_Value = 3 * _squatDefault;
+                                message = formatMessage(student.Student_Name, "third time", 3, "Squat", 3 * _squatDefault);
                                 break;
                             case 2:
-                                disciplineStudent.Discipline_Value = 3 * disciplineDefault.Money;
-                                message = formatMessage(student.Student_Name, "third time", 3, "Money");
+                                disciplineStudent.Discipline_Value = 3 * _moneyDefault;
+                                message = formatMessage(student.Student_Name, "third time", 3, "Money", 3 * _moneyDefault);
                                 break;
                             case 3:
-                                disciplineStudent.Discipline_Value = 3* disciplineDefault.Push_Up;
-                                message = formatMessage(student.Student_Name, "third time", 3, "Push-Up");
+                                disciplineStudent.Discipline_Value = 3 * _pushUpDefault;
+                                message = formatMessage(student.Student_Name, "third time", 3, "Push-Up", 3 * _pushUpDefault);
                                 break;
                         }
                     }
@@ -69,16 +72,16 @@ namespace AssignmentEAP.Service
                         {
                            
                         case 1:
-                            disciplineStudent.Discipline_Value = 2 * disciplineDefault.Squat_Amout;
-                            message = formatMessage(student.Student_Name, "second time", 2, "Squat");
+                            disciplineStudent.Discipline_Value = 2 * _squatDefault;
+                            message = formatMessage(student.Student_Name, "second time", 2, "Squat", 2 * _squatDefault);
                             break;
                         case 2:
-                            disciplineStudent.Discipline_Value = 2 * disciplineDefault.Money;
-                            message = formatMessage(student.Student_Name, "second time", 2, "Money");
+                            disciplineStudent.Discipline_Value = 2 * _moneyDefault;
+                            message = formatMessage(student.Student_Name, "second time", 2, "Money", 2 * _moneyDefault);
                             break;
                         case 3:
-                            disciplineStudent.Discipline_Value = 2 * disciplineDefault.Push_Up;
-                            message = formatMessage(student.Student_Name, "second time", 2, "Push-Up");
+                            disciplineStudent.Discipline_Value = 2 * _pushUpDefault;
+                            message = formatMessage(student.Student_Name, "second time", 2, "Push-Up", 2 * _pushUpDefault);
                             break;
                        
                         }
@@ -100,16 +103,16 @@ namespace AssignmentEAP.Service
                     switch (id)
                     {
                         case 1:
-                            disciplineStudent.Discipline_Value = disciplineDefault.Squat_Amout;
-                            message = formatMessage(student.Student_Name, "first time", 1, "Squat");
+                            disciplineStudent.Discipline_Value = _squatDefault;
+                            message = formatMessage(student.Student_Name, "first time", 1, "Squat", _squatDefault);
                             break;
                         case 2:
-                            disciplineStudent.Discipline_Value = disciplineDefault.Money;
-                            message = formatMessage(student.Student_Name, "first time", 1, "Money");
+                            disciplineStudent.Discipline_Value = _moneyDefault;
+                            message = formatMessage(student.Student_Name, "first time", 1, "Money", _moneyDefault);
                             break;
                         case 3:
-                            disciplineStudent.Discipline_Value = disciplineDefault.Push_Up;
-                            message = formatMessage(student.Student_Name, "first time", 1, "Push-Up");
+                            disciplineStudent.Discipline_Value = _pushUpDefault;
+                            message = formatMessage(student.Student_Name, "first time", 1, "Push-Up", _pushUpDefault);
                             break;
                     }
                 }
