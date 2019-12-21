@@ -12,6 +12,7 @@ namespace AssignmentEAP.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Class_Id { get; set; }
+        [Required(ErrorMessage = "Class Name is required")]
         public string Class_name { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime? Updated_at { get; set; }

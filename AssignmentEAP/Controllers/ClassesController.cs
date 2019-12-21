@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -79,10 +81,11 @@ namespace AssignmentEAP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Class_Id,Class_name,Created_at,Updated_at,Deleted_at")] Class @class)
+        public ActionResult Create([Bind(Include = "Class_Id,Class_name")] Class @class)
         {
             if (ModelState.IsValid)
             {
+                @class.Created_at = DateTime.Now;
                 db.Classes.Add(@class);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -111,11 +114,14 @@ namespace AssignmentEAP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Class_Id,Class_name,Created_at,Updated_at,Deleted_at")] Class @class)
+        public ActionResult Edit([Bind(Include = "Class_Id,Class_name")] Class @class)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(@class).State = EntityState.Modified;
+                var currentClass = db.Classes.Find(@class.Class_Id);
+                @class.Updated_at = DateTime.Now;
+                @class.Created_at = currentClass.Created_at;
+                db.Classes.AddOrUpdate(@class);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
