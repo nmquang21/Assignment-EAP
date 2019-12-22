@@ -188,6 +188,7 @@
     <Content Include="Content\img\template-mac.png" />
     <Content Include="Content\js\charts-custom.js" />
     <Content Include="Content\js\charts-home.js" />
+    <Content Include="Content\js\custom.js" />
     <Content Include="Content\js\data-table.js" />
     <Content Include="Content\js\dataTables.bootstrap4.js" />
     <Content Include="Content\js\front.js" />
