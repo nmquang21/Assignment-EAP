@@ -28,7 +28,6 @@ namespace AssignmentEAP.Controllers
             ViewBag.TotalSort = sortOrder == "total" ? "total_desc" : "total";
             //ViewBag.DisSort = sortOrder == "dis" ? "dis_desc" : "dis";
             var predicate = PredicateBuilder.New<Class>(true);
-            predicate = predicate.And(s =>s.Deleted_at == null);
             if (search != null)
             {
                 page = 1;
@@ -41,6 +40,7 @@ namespace AssignmentEAP.Controllers
             {
                 predicate = predicate.Or(s => s.Class_name.Contains(search));
             }
+            predicate = predicate.And(s => s.Deleted_at == null);
             listClass = listClass.Where(predicate);
             switch (sortOrder)
             {
