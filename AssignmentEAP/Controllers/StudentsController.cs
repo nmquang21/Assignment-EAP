@@ -48,6 +48,7 @@ namespace AssignmentEAP.Controllers
             ViewBag.IDSort = sortOrder == "id"? "id_desc":"id"; 
             ViewBag.ClassSort = sortOrder == "class"? "class_desc":"class"; 
             var predicate = PredicateBuilder.New<Student>(true);
+            predicate = predicate.And(s => s.Deleted_at == null);
             if (search != null)
             {
                 page = 1;
@@ -126,14 +127,14 @@ namespace AssignmentEAP.Controllers
             }
             endTime = new DateTime(endTime.Year, endTime.Month, endTime.Day, 23, 59, 59, 0);
 
-            var data = db.DisciplineStudents.Where(s => s.Student.RollNumber == roll && (s.Deleted_at == null) && (s.Created_at >= startTime && s.Created_at <= endTime))
+            var data = db.DisciplineStudents.Where(s => s.Student.RollNumber == roll && (s.Deleted_at == null) &&(s.Student.Deleted_at == null) && (s.Created_at >= startTime && s.Created_at <= endTime))
                 .GroupBy(
                     s => new
                     {
                         Year = s.Created_at.Year,
                         Month = s.Created_at.Month,
                         //Week = GetWeekNumberOfMonth(s.Created_at)
-                        Day = s.Created_at.Day
+                        //Day = s.Created_at.Day
                     }
                 ).Select(g => new
                 {
@@ -147,7 +148,7 @@ namespace AssignmentEAP.Controllers
             {
                 Data = data.Select(s => new
                 {
-                    Date = s.Date.ToString("yyyy MMMM"),
+                    Date = s.Date.ToString("d"),
                     Money = s.Money,
                     PushUp = s.PushUp,
                     Count = s.Count

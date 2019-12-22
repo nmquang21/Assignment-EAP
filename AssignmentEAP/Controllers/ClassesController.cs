@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using AssignmentEAP.Models;
 using LinqKit;
 using PagedList;
+using WebGrease;
 
 namespace AssignmentEAP.Controllers
 {
@@ -21,6 +23,7 @@ namespace AssignmentEAP.Controllers
         {
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             var predicate = PredicateBuilder.New<Class>(true);
+            predicate = predicate.And(s =>s.Deleted_at == null);
             if (search != null)
             {
                 page = 1;
@@ -53,6 +56,65 @@ namespace AssignmentEAP.Controllers
             List<Class> classes = db.Classes.ToList();
             return Json(new { data = classes }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetChartData(int? classId, string start, string end)
+        {
+            var startTime = DateTime.Now;
+            startTime = startTime.AddYears(-1);
+            try
+            {
+                startTime = DateTime.Parse(start);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, 0, 0, 0, 0);
+            var endTime = DateTime.Now;
+            try
+            {
+                endTime = DateTime.Parse(end);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            endTime = new DateTime(endTime.Year, endTime.Month, endTime.Day, 23, 59, 59, 0);
+            var data = db.Classes
+                .Join(db.Students, c => c.Class_Id, s => s.Class.Class_Id, (c, s) => new { c, s})
+                .Join(db.DisciplineStudents, cs => cs.s.RollNumber, ds => ds.Student.RollNumber, (cs, ds) => new { cs, ds })
+                .Where(csds => csds.cs.c.Class_Id == classId &&(csds.cs.c.Deleted_at == null) 
+                        && (csds.cs.s.Deleted_at == null) &&(csds.ds.Deleted_at == null) 
+                        && (csds.ds.Created_at >= startTime && csds.ds.Created_at <= endTime))
+                .GroupBy(
+                    csds => new
+                    {
+                        Year = csds.ds.Created_at.Year,
+                        Month = csds.ds.Created_at.Month,
+                        //Week = GetWeekNumberOfMonth(s.Created_at)
+                        Day = csds.ds.Created_at.Day
+                    }
+                ).Select(g => new
+                {
+                    Date = g.FirstOrDefault().ds.Created_at,
+                    Money = g.Where(s => s.ds.Discipline.Discipline_name== "Money").Sum(s => (double?)s.ds.Discipline_Value) ?? 0,
+                    PushUp = g.Where(s => s.ds.Discipline.Discipline_name != "Money").Sum(s => (double?)s.ds.Discipline_Value) ?? 0,
+                    Count = g.Count()
+                }).OrderBy(s => s.Date).ToList();
+
+            return new JsonResult()
+            {
+                Data = data.Select(s => new
+                {
+                    Date = s.Date.ToString("d"),
+                    Money = s.Money,
+                    PushUp = s.PushUp,
+                    Count = s.Count
+                }),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         // GET: Classes/Details/5
         public ActionResult Details(int? id)
         {
@@ -65,7 +127,11 @@ namespace AssignmentEAP.Controllers
             {
                 return HttpNotFound();
             }
-            return View(@class);
+            ViewBag.CurrentClass = @class;
+
+            //List student of class:
+            var listStudent = db.Students.Where(s => s.Class.Class_Id == @class.Class_Id && (s.Deleted_at == null)).ToList();
+            return View(listStudent);
         }
 
         // GET: Classes/Create

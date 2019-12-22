@@ -52,3 +52,6 @@
     width: 100%;
     min-height: 450px;
 }
+select [name='order-listing_length'] {
+    width: 60px;
+}

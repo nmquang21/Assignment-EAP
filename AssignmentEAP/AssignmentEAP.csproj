@@ -165,6 +165,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\custom.css" />
+    <Content Include="Content\css\dataTables.bootstrap4.css" />
     <Content Include="Content\css\orionicons.css" />
     <Content Include="Content\css\style.blue.css" />
     <Content Include="Content\css\style.default.css" />
@@ -187,7 +188,10 @@
     <Content Include="Content\img\template-mac.png" />
     <Content Include="Content\js\charts-custom.js" />
     <Content Include="Content\js\charts-home.js" />
+    <Content Include="Content\js\data-table.js" />
+    <Content Include="Content\js\dataTables.bootstrap4.js" />
     <Content Include="Content\js\front.js" />
+    <Content Include="Content\js\jquery.dataTables.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
