@@ -19,6 +19,8 @@ namespace AssignmentEAP.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<MyDbContext>(null);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
