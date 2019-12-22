@@ -8,8 +8,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="container-fluid px-xl-5">
-        <section class="py-5">
+
             <div class="row">
                 <!-- Basic Form-->
                 <div class="col-lg-2 mb-5"></div>
@@ -69,8 +68,7 @@
                 <!-- Modal Form-->
                 <div class="col-lg-2 mb-5"></div>
             </div>
-        </section>
-    </div>
+
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>

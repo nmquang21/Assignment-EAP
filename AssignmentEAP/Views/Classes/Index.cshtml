@@ -44,7 +44,7 @@
                             STT
                         </th>
                         <th>
-                            <a href="@Url.Action("Index", new {sortOrder = ViewBag.NameSort, search = ViewBag.Search})" style="color: #212529;">
+                            <a href="@Url.Action("Index", new {sortOrder = ViewBag.NameSort, search = ViewBag.Search})" style="color: #212529;" title="Filter by Name">
                                 <span class="sort-link">Name</span>
                                 @if (ViewBag.SortOrder == "name_desc")
                                 {
@@ -56,8 +56,8 @@
                                 }
                             </a>
                         </th>
-                        <th>
-                            <a href="@Url.Action("Index", new {sortOrder = ViewBag.TotalSort, search = ViewBag.Search})" style="color: #212529;">
+                        <th class="text-center">
+                            <a href="@Url.Action("Index", new {sortOrder = ViewBag.TotalSort, search = ViewBag.Search})" style="color: #212529;" title="Filter by Total Students">
                                 <span class="sort-link">Total students</span>
                                 @if (ViewBag.SortOrder == "total_desc")
                                 {
