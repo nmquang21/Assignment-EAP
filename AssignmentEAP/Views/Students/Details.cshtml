@@ -189,7 +189,7 @@
                 url: `/Students/GetChartData?roll=${rollNumber}&start=${startPara}&end=${endPara}`,
                 type: 'GET',
                 success: function (responseData) {
-                    $('#late-counter').html(responseData.length);
+                    
                     google.charts.load('current', { 'packages': ['line', 'corechart'] });
                     google.charts.setOnLoadCallback(drawChart);
 
@@ -200,10 +200,12 @@
                         data.addColumn('date', 'Month');
                         data.addColumn('number', "Money");
                         data.addColumn('number', "Push-up");
+                        var total = 0;
                         for (var i = 0; i < responseData.length; i++) {
                             data.addRow([new Date(responseData[i].Date), responseData[i].Money, responseData[i].PushUp]);
+                            total += responseData[i].Count;
                         }
-
+                        $('#late-counter').html(total);
                         var classicOptions = {
                             //title: 'Thống kê số tiền (push-up) đi học muộn của sinh viên',
                             series: {
