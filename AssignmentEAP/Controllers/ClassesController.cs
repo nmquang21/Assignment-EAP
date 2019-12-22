@@ -68,7 +68,7 @@ namespace AssignmentEAP.Controllers
             return Json(new { data = classes }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetChartData(int? classId, string start, string end)
+        public ActionResult GetChartData(int? id, string start, string end)
         {
             var startTime = DateTime.Now;
             startTime = startTime.AddYears(-1);
@@ -94,7 +94,7 @@ namespace AssignmentEAP.Controllers
             var data = db.Classes
                 .Join(db.Students, c => c.Class_Id, s => s.Class.Class_Id, (c, s) => new { c, s})
                 .Join(db.DisciplineStudents, cs => cs.s.RollNumber, ds => ds.Student.RollNumber, (cs, ds) => new { cs, ds })
-                .Where(csds => csds.cs.c.Class_Id == classId &&(csds.cs.c.Deleted_at == null) 
+                .Where(csds => csds.cs.c.Class_Id == id &&(csds.cs.c.Deleted_at == null) 
                         && (csds.cs.s.Deleted_at == null) &&(csds.ds.Deleted_at == null) 
                         && (csds.ds.Created_at >= startTime && csds.ds.Created_at <= endTime))
                 .GroupBy(
