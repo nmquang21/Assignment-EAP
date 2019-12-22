@@ -127,9 +127,16 @@
                                     @Html.DisplayFor(modelItem => item.Phone)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.RollNumber }) |
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.RollNumber }) |
                                     @Html.ActionLink("Details", "Details", new { id = item.RollNumber }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })*@
+                                    <a href="@Url.Action("Edit", new {id = item.RollNumber})">
+                                        <i class="fas fa-pencil-alt" style="cursor: pointer" title="Edit"></i>
+                                    </a> |
+                                    <a href="@Url.Action("Details", new {id = item.RollNumber})">
+                                        <i class="fas fa-info-circle" style="cursor: pointer" title="Detail"></i>
+                                    </a> |
+                                    <i class="fas fa-trash-alt" style="cursor: pointer;color: #4680ff" title="Delete" data-id="@item.RollNumber"></i>
                                 </td>
                             </tr>
                         }
@@ -169,6 +176,23 @@
                 selectClass.change(function() {
                     var className = $('option:selected', this).val();
                     window.location.search = `?className=${className}`;
+                });
+            });
+            $('.fa-trash-alt').click(function() {
+                var id = $(this).data('id');
+                showSwal('warning-message-and-cancel');
+                console.log(id);
+                $('.swal-button--confirm').click(function() {
+                    $.ajax({
+                        url: `/Students/Delete?id=${id}`,
+                        type: 'GET',
+                        success: function (responseData) {
+                            showSwal('success-message');
+                            setTimeout(function() {
+                                location.reload();
+                            },2000);
+                        }
+                    });
                 });
             });
         </script>

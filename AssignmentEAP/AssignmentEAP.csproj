@@ -166,6 +166,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\css\jquery.toast.min.css" />
     <Content Include="Content\css\orionicons.css" />
     <Content Include="Content\css\style.blue.css" />
     <Content Include="Content\css\style.default.css" />
@@ -186,6 +187,13 @@
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\illustration.svg" />
     <Content Include="Content\img\template-mac.png" />
+    <Content Include="Content\js\alert\alerts.js" />
+    <Content Include="Content\js\alert\avgrund.js" />
+    <Content Include="Content\js\alert\desktop-notification.js" />
+    <Content Include="Content\js\alert\jquery.avgrund.min.js" />
+    <Content Include="Content\js\alert\jquery.toast.min.js" />
+    <Content Include="Content\js\alert\sweetalert.min.js" />
+    <Content Include="Content\js\alert\toastDemo.js" />
     <Content Include="Content\js\charts-custom.js" />
     <Content Include="Content\js\charts-home.js" />
     <Content Include="Content\js\custom.js" />
