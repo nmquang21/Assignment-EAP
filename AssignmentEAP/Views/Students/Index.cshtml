@@ -57,7 +57,7 @@
                                 Avatar
                             </th>
                             <th>
-                                <a href="@Url.Action("Index",new{sortOrder = ViewBag.IDSort, search = ViewBag.Search, className = ViewBag.Class})" style="color: #212529;">
+                                <a href="@Url.Action("Index",new{sortOrder = ViewBag.IDSort, search = ViewBag.Search, className = ViewBag.Class})" style="color: #212529;" title="Filter by ID">
                                     <span class ="sort-link">ID</span>
                                     @if (ViewBag.SortOrder == "id_desc")
                                     {
@@ -70,7 +70,7 @@
                                 </a>
                             </th>
                             <th>
-                                <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSort, search = ViewBag.Search, className = ViewBag.Class })" style="color: #212529;">
+                                <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSort, search = ViewBag.Search, className = ViewBag.Class })" style="color: #212529;" title="Filter by Name">
                                     <span class ="sort-link">Name</span>
                                     @if (ViewBag.SortOrder == "name_desc")
                                     {
@@ -83,7 +83,7 @@
                                 </a>
                             </th>
                             <th>
-                                <a href="@Url.Action("Index", new { sortOrder = ViewBag.ClassSort, search = ViewBag.Search, className = ViewBag.Class })" style="color: #212529;">
+                                <a href="@Url.Action("Index", new { sortOrder = ViewBag.ClassSort, search = ViewBag.Search, className = ViewBag.Class })" style="color: #212529;" title="Filter by Class">
                                     <span class ="sort-link">Class</span>
                                     @if (ViewBag.SortOrder == "class_desc")
                                     {
