@@ -71,9 +71,9 @@
                         @Html.DisplayFor(modelItem => item.Phone)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.RollNumber }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.RollNumber }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })
+                        <a href="@Url.Action("Edit","Students",new { id = item.RollNumber })">Edit</a> |
+                        <a href="@Url.Action("Details","Students",new { id = item.RollNumber })">Details</a> |
+                        <a href="@Url.Action("Delete","Students",new { id = item.RollNumber })">Delete</a>
                     </td>
                 </tr>
             }
