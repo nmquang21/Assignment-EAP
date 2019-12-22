@@ -48,7 +48,7 @@ namespace AssignmentEAP.Controllers
             ViewBag.IDSort = sortOrder == "id"? "id_desc":"id"; 
             ViewBag.ClassSort = sortOrder == "class"? "class_desc":"class"; 
             var predicate = PredicateBuilder.New<Student>(true);
-            predicate = predicate.And(s => s.Deleted_at == null);
+            
             if (search != null)
             {
                 page = 1;
@@ -70,6 +70,7 @@ namespace AssignmentEAP.Controllers
             }
             ViewBag.Class = className;
             ViewBag.listClass = db.Classes.ToList();
+            predicate = predicate.And(s => s.Deleted_at == null);
             listStudent = listStudent.Where(predicate);
             switch (sortOrder)
             {
@@ -176,8 +177,9 @@ namespace AssignmentEAP.Controllers
                     TotalMoney= s.Where(d => d.Discipline.Discipline_name == "Money").Sum(d => (double?)d.Discipline_Value)??0,
                     TotalPushUp = s.Where(d => d.Discipline.Discipline_name != "Money").Sum(d => (double?)d.Discipline_Value) ?? 0,
                 });
-            ViewBag.TotalMoney = data.Sum(d => (double?)d.TotalMoney)??0;
-            ViewBag.TotalPushUp = data.Sum(d => (double?)d.TotalPushUp)??0;
+            var totalMoney = data.Sum(d => (double?)d.TotalMoney) ?? 0;
+            ViewBag.TotalPushUp = data.Sum(d => (double?)d.TotalPushUp) ?? 0;
+            ViewBag.TotalMoney = String.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", totalMoney);
             return View(student);
         }
 
