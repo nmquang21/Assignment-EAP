@@ -22,6 +22,8 @@ namespace AssignmentEAP.Controllers
         public ActionResult Index(string search, int? page, string sortOrder)
         {
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.TotalSort = sortOrder == "total" ? "total_desc" : "total";
+            //ViewBag.DisSort = sortOrder == "dis" ? "dis_desc" : "dis";
             var predicate = PredicateBuilder.New<Class>(true);
             predicate = predicate.And(s =>s.Deleted_at == null);
             if (search != null)
@@ -41,6 +43,12 @@ namespace AssignmentEAP.Controllers
             {
                 case "name_desc":
                     listClass = listClass.OrderByDescending(s => s.Class_name);
+                    break;
+                case "total_desc":
+                    listClass = listClass.OrderByDescending(s => s.Students.Count);
+                    break;
+                case "total":
+                    listClass = listClass.OrderBy(s => s.Students.Count);
                     break;
                 default:
                     listClass = listClass.OrderBy(s => s.Class_name);

@@ -48,34 +48,38 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Discipline</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        <img src="@item.Avatar" alt="@item.Student_Name" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow">
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RollNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Student_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
-                    </td>
-                    <td>
-                        <a href="@Url.Action("Edit","Students",new { id = item.RollNumber })">Edit</a> |
-                        <a href="@Url.Action("Details","Students",new { id = item.RollNumber })">Details</a> |
-                        <a href="@Url.Action("Delete","Students",new { id = item.RollNumber })">Delete</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <img src="@item.Avatar" alt="@item.Student_Name" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RollNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.DisciplineStudents.Count)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit","Students",new { id = item.RollNumber })">Edit</a> |
+                    <a href="@Url.Action("Details","Students",new { id = item.RollNumber })">Details</a> |
+                    <a href="@Url.Action("Delete","Students",new { id = item.RollNumber })">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

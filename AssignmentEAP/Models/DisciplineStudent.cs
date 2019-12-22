@@ -14,6 +14,7 @@ namespace AssignmentEAP.Models
         [DisplayName("Discipline Value")]
         public double Discipline_Value { get; set; }
         [DisplayName("Discipline Date")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Created_at { get; set; }
         public DateTime? Updated_at { get; set; }
         public DateTime? Deleted_at { get; set; }
