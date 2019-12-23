@@ -210,12 +210,23 @@ namespace AssignmentEAP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class @class = db.Classes.Find(id);
-            if (@class == null)
+            var existClass = db.Classes.Find(id);
+            if (existClass == null || existClass.Deleted_at != null)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            return View(@class);
+            if (ModelState.IsValid)
+            {
+                existClass.Deleted_at = DateTime.Now;
+                existClass.Class_name = existClass.Class_name + " - Deleted";
+                db.Classes.AddOrUpdate(existClass);
+                db.SaveChanges();
+            }
+            return new JsonResult()
+            {
+                Data = "Success!",
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         // POST: Classes/Delete/5
