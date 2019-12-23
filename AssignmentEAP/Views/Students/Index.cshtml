@@ -128,14 +128,14 @@
                                 </td>
                                 <td>
                                     @*@Html.ActionLink("Edit", "Edit", new { id = item.RollNumber }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.RollNumber }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })*@
+        @Html.ActionLink("Details", "Details", new { id = item.RollNumber }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })*@
                                     <a href="@Url.Action("Edit", new {id = item.RollNumber})">
                                         <i class="fas fa-pencil-alt" style="cursor: pointer" title="Edit"></i>
-                                    </a> |
+                                    </a>&ensp;|&ensp;
                                     <a href="@Url.Action("Details", new {id = item.RollNumber})">
                                         <i class="fas fa-info-circle" style="cursor: pointer" title="Detail"></i>
-                                    </a> |
+                                    </a>&ensp;|&ensp;
                                     <i class="fas fa-trash-alt" style="cursor: pointer;color: #4680ff" title="Delete" data-id="@item.RollNumber"></i>
                                 </td>
                             </tr>

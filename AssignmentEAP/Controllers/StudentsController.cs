@@ -72,6 +72,7 @@ namespace AssignmentEAP.Controllers
             ViewBag.Class = className;
             ViewBag.listClass = db.Classes.ToList();
             predicate = predicate.And(s => s.Deleted_at == null);
+            predicate = predicate.And(s => s.Class.Deleted_at == null);
             listStudent = listStudent.Where(predicate);
             switch (sortOrder)
             {
