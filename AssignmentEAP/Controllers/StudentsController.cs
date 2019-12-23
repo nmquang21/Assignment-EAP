@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -244,16 +245,20 @@ namespace AssignmentEAP.Controllers
         // GET: Students/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Student student = db.Students.Find(id);
             if (student == null)
             {
-                return HttpNotFound();
+                Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return Json(new { success = false, message = "Student is not found" }, JsonRequestBehavior.AllowGet);
             }
-            return View(student);
+            student.Deleted_at = DateTime.Now;
+            db.Students.AddOrUpdate(student);
+            db.SaveChanges();
+            return new JsonResult()
+            {
+                Data = "Done!",
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         // POST: Students/Delete/5
