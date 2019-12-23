@@ -163,6 +163,7 @@ namespace AssignmentEAP.Controllers
                 @class.Created_at = DateTime.Now;
                 db.Classes.Add(@class);
                 db.SaveChanges();
+                TempData["success"] = "Success!";
                 return RedirectToAction("Index");
             }
 
@@ -198,6 +199,7 @@ namespace AssignmentEAP.Controllers
                 @class.Created_at = currentClass.Created_at;
                 db.Classes.AddOrUpdate(@class);
                 db.SaveChanges();
+                TempData["success"] = "Success!";
                 return RedirectToAction("Index");
             }
             return View(@class);

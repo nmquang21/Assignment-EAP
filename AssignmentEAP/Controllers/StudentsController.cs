@@ -203,6 +203,7 @@ namespace AssignmentEAP.Controllers
             {
                 db.Students.Add(student);
                 db.SaveChanges();
+                TempData["success"] = "Success!";
                 return RedirectToAction("Index");
             }
 
@@ -231,12 +232,17 @@ namespace AssignmentEAP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RollNumber,Student_Name,Avatar,Birthday,Email,Phone,Class_Id,Created_at,Updated_at,Deleted_at")] Student student)
+        public ActionResult Edit([Bind(Include = "RollNumber,Student_Name,Avatar,Birthday,Email,Phone,Class_Id,Deleted_at")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
+                //db.Entry(student).State = EntityState.Modified;
+                var existStudent = db.Students.Find(student.RollNumber);
+                student.Updated_at = DateTime.Now;
+                student.Created_at = existStudent.Created_at;
+                db.Students.AddOrUpdate(student);
                 db.SaveChanges();
+                TempData["success"] = "Success!";
                 return RedirectToAction("Index");
             }
             ViewBag.Class_Id = new SelectList(db.Classes, "Class_Id", "Class_name", student.Class_Id);
